@@ -59,6 +59,7 @@ const mails = [
     <div class="grid">
       {others.map((p, i) => (
         <article class="card reveal" style={`transition-delay:${i * 0.06}s`}>
+          {p.logo && <img class="logo" src={url(p.logo.src)} alt={p.logo.alt} width={p.logo.width} height={p.logo.height} loading="lazy" />}
           <p class="code mono">{p.code}</p>
           <h3>{p.name}</h3>
           <p class="kind mono">{p.kind}</p>
@@ -109,6 +110,7 @@ const mails = [
   .card { padding: 28px; border: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; gap: 10px; transition: border-color 0.3s, transform 0.4s var(--ease), background 0.3s; }
   .card:hover { border-color: var(--signal); transform: translateY(-4px); background: var(--ink-2); }
   .card h3 { margin: 4px 0 0; font: 600 22px/1.15 var(--f-display); letter-spacing: -0.02em; }
+  .logo { align-self: flex-start; height: 28px; width: auto; margin-bottom: 6px; }
   .kind { margin: 0; font-size: 12px; color: var(--dim); }
   .card .tags { margin-top: auto; padding-top: 8px; }
 

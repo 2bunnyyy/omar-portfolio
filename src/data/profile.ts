@@ -27,7 +27,7 @@ export const profile = {
 
 export const stats = [
   { value: '1er', label: 'Prix — Forum National IA 2026' },
-  { value: '50+', label: 'Utilisateurs réseau administrés' },
+  { value: '100+', label: 'Employés sur le réseau administré' },
   { value: '95%', label: 'Hausse de satisfaction ERP' },
   { value: 'v16→18', label: 'Versions Odoo maîtrisées' },
 ];
@@ -66,7 +66,7 @@ export const layers = [
     id: 'L3',
     name: 'Network',
     title: 'Réseaux',
-    desc: 'Conception, mise en œuvre et maintenance de réseaux informatiques. Configuration de routeurs, commutateurs et pare-feu pour un parc de plus de 50 utilisateurs.',
+    desc: 'Conception, mise en œuvre et maintenance de réseaux informatiques. Configuration de routeurs, commutateurs et pare-feu pour une infrastructure de plus de 100 employés.',
     tags: ['Routage', 'Switching', 'LAN / WAN', 'Dépannage'],
   },
   {
@@ -102,9 +102,9 @@ export const hops = [
     host: 'soprosys.net.bsh',
     period: 'Août 2023 →',
     title: 'Ingénieur Réseaux & Infogérance',
-    org: 'SOPROSYS SAS — Groupement Holding BSH',
+    org: 'SOPROSYS SAS',
     points: [
-      'Conception et maintenance du réseau de plus de 50 utilisateurs',
+      'Conception et maintenance du réseau d\'une entreprise de plus de 100 employés',
       'Routeurs, commutateurs, pare-feu et administration serveurs',
       'Surveillance des menaces et virtualisation',
       "Projets de déploiement, migration et mise à niveau d'infrastructure",
@@ -154,15 +154,16 @@ export const projects = [
   {
     code: 'ERP-02',
     name: 'Modules Odoo sur mesure',
+    logo: { src: '/images/odoo.webp', alt: 'Logo Odoo', width: 311, height: 98 },
     kind: 'SOPROSYS SAS',
     desc: 'Développement de modules spécifiques, rapports personnalisés et migration inter-versions pour optimiser les processus internes.',
     tags: ['Python', 'Odoo', 'PostgreSQL'],
   },
   {
     code: 'NET-03',
-    name: 'Infrastructure Holding BSH',
+    name: 'Infrastructure d\'entreprise',
     kind: 'Infogérance',
-    desc: 'Architecture, sécurité et maintenance du réseau et des serveurs d\'un groupe de plus de 50 utilisateurs.',
+    desc: 'Architecture, sécurité et maintenance du réseau et des serveurs d\'une entreprise de plus de 100 employés.',
     tags: ['Réseau', 'Sécurité', 'Virtualisation'],
   },
   {
