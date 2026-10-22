@@ -1,4 +1,5 @@
 ---
+import { url } from '../data/url';
 import { press } from '../data/profile';
 const ticker = "FORUM NATIONAL SUR L'INTELLIGENCE ARTIFICIELLE ✦ 2–3 SEPTEMBRE 2026 ✦ DJIBOUTI ✦ 1ER PRIX ✦ TECHGENIUS ✦ SAFEINBOX ✦ ";
 ---
@@ -38,15 +39,15 @@ const ticker = "FORUM NATIONAL SUR L'INTELLIGENCE ARTIFICIELLE ✦ 2–3 SEPTEMB
 
       <div class="mosaic reveal">
         <figure class="m m--wide">
-          <img src="/images/forum-laureats.webp" alt="Les lauréats du Forum National sur l'IA aux côtés du Président de la République" loading="lazy" width="1080" height="720" />
+          <img src={url('/images/forum-laureats.webp')} alt="Les lauréats du Forum National sur l'IA aux côtés du Président de la République" loading="lazy" width="1080" height="720" />
           <figcaption class="mono">IMG_001 · Lauréats & Président de la République</figcaption>
         </figure>
         <figure class="m">
-          <img src="/images/forum-ecran.webp" alt="Écran géant annonçant TechGenius premier prix" loading="lazy" width="828" height="452" />
+          <img src={url('/images/forum-ecran.webp')} alt="Écran géant annonçant TechGenius premier prix" loading="lazy" width="828" height="452" />
           <figcaption class="mono">IMG_002 · Annonce</figcaption>
         </figure>
         <figure class="m">
-          <img src="/images/duo-safeinbox.webp" alt="Omar Abdillahi Omar et Mohamed Hassan Isman au forum" loading="lazy" width="1000" height="1038" />
+          <img src={url('/images/duo-safeinbox.webp')} alt="Omar Abdillahi Omar et Mohamed Hassan Isman au forum" loading="lazy" width="1000" height="1038" />
           <figcaption class="mono">IMG_003 · Les cofondateurs</figcaption>
         </figure>
       </div>

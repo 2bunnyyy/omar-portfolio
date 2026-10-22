@@ -1,4 +1,5 @@
 ---
+import { url } from '../data/url';
 import '../styles/global.css';
 import { profile } from '../data/profile';
 
@@ -11,7 +12,7 @@ const {
   title = `${profile.name} — Réseaux · ERP Odoo · IA souveraine`,
   description = profile.pitch,
 } = Astro.props;
-const ogImage = new URL('/images/forum-laureats.webp', Astro.site).href;
+const ogImage = new URL(url('/images/forum-laureats.webp'), Astro.site).href;
 ---
 
 <!doctype html>
@@ -22,7 +23,7 @@ const ogImage = new URL('/images/forum-laureats.webp', Astro.site).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#05080f" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
     <link rel="canonical" href={Astro.url.href} />
 
     <meta property="og:type" content="website" />

@@ -1,4 +1,5 @@
 ---
+import { url } from '../data/url';
 import { projects } from '../data/profile';
 const [featured, ...others] = projects;
 
@@ -22,8 +23,8 @@ const mails = [
     <article class="feat frame reveal">
       <div class="feat__info">
         <div class="feat__logos">
-          <img src="/images/safeinbox.webp" alt="Logo SafeInbox" width="800" height="436" loading="lazy" />
-          <img src="/images/techgenius.webp" alt="Logo TechGenius Djibouti" width="600" height="600" loading="lazy" class="tg" />
+          <img src={url('/images/safeinbox.webp')} alt="Logo SafeInbox" width="800" height="436" loading="lazy" />
+          <img src={url('/images/techgenius.webp')} alt="Logo TechGenius Djibouti" width="600" height="600" loading="lazy" class="tg" />
         </div>
         <p class="code mono">{featured.code} · {featured.kind}</p>
         <h3>{featured.name}</h3>

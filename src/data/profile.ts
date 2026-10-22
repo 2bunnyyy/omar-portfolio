@@ -1,3 +1,5 @@
+import { url } from './url';
+
 // Single source of truth for the site content. Edit here, not in components.
 
 export const profile = {
@@ -16,7 +18,7 @@ export const profile = {
     "Je conçois, sécurise et fais évoluer des systèmes d'information — du câble au modèle de langage. Réseaux, ERP Odoo et intelligence artificielle souveraine, construits à Djibouti.",
   email: 'omarabdillahi898@gmail.com',
   linkedin: 'https://www.linkedin.com/in/omar-abdillahi-242b1a224',
-  cv: '/docs/CV-Omar-Abdillahi-Omar.pdf',
+  cv: url('/docs/CV-Omar-Abdillahi-Omar.pdf'),
   availability: 'Télétravail ou présentiel',
   languages: ['Français', 'Anglais', 'Somali'],
   strengths: ['Curiosité & passion', 'Communication', 'Collaboration', "Capacité d'adaptation"],

@@ -1,4 +1,5 @@
 ---
+import { url } from '../data/url';
 import { profile, stats } from '../data/profile';
 ---
 
@@ -36,7 +37,7 @@ import { profile, stats } from '../data/profile';
         <span>NODE · OMAR-01</span><span class="ok">● UP</span>
       </div>
       <div class="card__img">
-        <img src="/images/omar.webp" alt="Portrait d'Omar Abdillahi Omar" width="433" height="577" loading="eager" />
+        <img src={url('/images/omar.webp')} alt="Portrait d'Omar Abdillahi Omar" width="433" height="577" loading="eager" />
         <div class="scan" aria-hidden="true"></div>
       </div>
       <dl class="card__data mono">
