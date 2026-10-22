@@ -1,0 +1,91 @@
+---
+const links = [
+  { href: '#award', code: '01', label: 'Prix IA' },
+  { href: '#stack', code: '02', label: 'Stack' },
+  { href: '#trace', code: '03', label: 'Parcours' },
+  { href: '#projects', code: '04', label: 'Projets' },
+  { href: '#contact', code: '05', label: 'Contact' },
+];
+---
+
+<header class="nav">
+  <div class="nav__inner wrap">
+    <a href="#top" class="nav__logo mono" aria-label="Retour en haut">
+      <span class="dot"></span>omar<span class="at">@</span>djibouti<span class="path">:~$</span>
+    </a>
+    <nav aria-label="Navigation principale">
+      <ul class="nav__links">
+        {links.map((l) => (
+          <li><a href={l.href}><span class="code">{l.code}</span>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="nav__clock mono" aria-label="Heure de Djibouti">
+      <span class="lbl">DJI</span> <time id="clock">--:--:--</time>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    border-bottom: 1px solid transparent;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .nav.is-scrolled { background: rgba(5, 8, 15, 0.78); backdrop-filter: blur(12px); border-color: var(--line); }
+  .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
+  .nav__logo { font-size: 14px; display: flex; align-items: center; gap: 2px; white-space: nowrap; }
+  .dot { width: 8px; height: 8px; margin-right: 10px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 12px var(--signal); animation: pulse 2.4s infinite; }
+  .at, .path { color: var(--signal); }
+  .nav__links { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; }
+  .nav__links a {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px;
+    font: 400 13px/1 var(--f-mono);
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav__links a:hover, .nav__links a.is-active { color: var(--text); }
+  .nav__links a.is-active .code { color: var(--signal); }
+  .code { color: var(--dim); transition: color 0.2s; }
+  .nav__clock { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .lbl { color: var(--amber); }
+  @keyframes pulse { 50% { opacity: 0.35; } }
+
+  @media (max-width: 900px) {
+    .nav__links { display: none; }
+  }
+</style>
+
+<script>
+  const nav = document.querySelector('.nav');
+  const onScroll = () => nav?.classList.toggle('is-scrolled', scrollY > 30);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const clock = document.getElementById('clock');
+  const fmt = new Intl.DateTimeFormat('fr-FR', {
+    timeZone: 'Africa/Djibouti', hour: '2-digit', minute: '2-digit', second: '2-digit',
+  });
+  const tick = () => { if (clock) clock.textContent = fmt.format(new Date()); };
+  tick();
+  setInterval(tick, 1000);
+
+  // Highlight the link of the section in view
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.nav__links a')];
+  const spy = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      links.forEach((a) => a.classList.toggle('is-active', a.hash === `#${e.target.id}`));
+    }
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  links.forEach((a) => {
+    const target = document.querySelector(a.hash);
+    if (target) spy.observe(target);
+  });
+</script>

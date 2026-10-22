@@ -1,0 +1,73 @@
+---
+// Short boot sequence shown once per session. Click or any key skips it.
+const lines = [
+  ['POST', 'mémoire OK · 16 coeurs'],
+  ['eth0', 'link up 10Gb/s full-duplex'],
+  ['dhcp', 'lease 10.20.26.1 → djibouti.gw'],
+  ['odoo', 'v18 modules chargés'],
+  ['safeai', 'modèle souverain prêt (local)'],
+  ['firewall', 'politique appliquée · 0 menace'],
+];
+---
+
+<div class="boot" id="boot" aria-hidden="true">
+  <div class="boot__inner">
+    {lines.map(([k, v], i) => (
+      <p style={`--d:${i * 0.16}s`}>
+        <span class="ok">[ OK ]</span> <span class="k">{k}</span> {v}
+      </p>
+    ))}
+    <p class="boot__final" style={`--d:${lines.length * 0.16 + 0.1}s`}>
+      omar@djibouti:~$ <span class="caret"></span>
+    </p>
+  </div>
+  <div class="boot__bar"><span></span></div>
+</div>
+
+<style>
+  .boot {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    background: var(--ink);
+    font: 400 13px/1.9 var(--f-mono);
+    color: var(--muted);
+    transition: opacity 0.6s var(--ease), visibility 0.6s;
+  }
+  .boot.is-done { opacity: 0; visibility: hidden; }
+  .boot__inner { width: min(460px, calc(100% - 32px)); }
+  .boot p { margin: 0; opacity: 0; animation: line 0.01s forwards; animation-delay: var(--d); }
+  .ok { color: var(--signal); }
+  .k { display: inline-block; min-width: 72px; color: var(--text); }
+  .boot__final { margin-top: 14px !important; color: var(--text); }
+  .caret { display: inline-block; width: 9px; height: 16px; vertical-align: -3px; background: var(--signal); animation: blink 1s steps(1) infinite; }
+  .boot__bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--line); }
+  .boot__bar span { display: block; height: 100%; background: var(--signal); animation: bar 1.5s var(--ease) forwards; transform-origin: left; transform: scaleX(0); }
+  @keyframes line { to { opacity: 1; } }
+  @keyframes blink { 50% { opacity: 0; } }
+  @keyframes bar { to { transform: scaleX(1); } }
+</style>
+
+<script>
+  const boot = document.getElementById('boot');
+  if (boot) {
+    const done = () => {
+      boot.classList.add('is-done');
+      document.documentElement.classList.add('booted');
+      try { sessionStorage.setItem('booted', '1'); } catch {}
+    };
+    let seen = false;
+    try { seen = sessionStorage.getItem('booted') === '1'; } catch {}
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (seen || reduced) {
+      done();
+    } else {
+      const t = setTimeout(done, 1700);
+      const skip = () => { clearTimeout(t); done(); };
+      boot.addEventListener('click', skip, { once: true });
+      addEventListener('keydown', skip, { once: true });
+    }
+  }
+</script>

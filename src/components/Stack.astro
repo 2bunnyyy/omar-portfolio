@@ -1,0 +1,82 @@
+---
+import { layers } from '../data/profile';
+---
+
+<section class="stack" id="stack">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">02 // Modèle OSI personnel</span>
+      <h2 class="sec-title">Du câble au <em>modèle</em> de langage.</h2>
+      <p class="sec-lead">
+        Mes compétences rangées comme une pile réseau : chaque couche s'appuie sur celle du dessous.
+        Ouvrez une couche pour l'inspecter.
+      </p>
+    </div>
+
+    <div class="osi reveal">
+      {layers.map((l, i) => (
+        <details class="layer" open={i === 0} name="osi" style={`--i:${i}`}>
+          <summary>
+            <span class="layer__id mono">{l.id}</span>
+            <span class="layer__name mono">{l.name}</span>
+            <span class="layer__title">{l.title}</span>
+            <span class="layer__plus" aria-hidden="true"></span>
+          </summary>
+          <div class="layer__body">
+            <p>{l.desc}</p>
+            <ul>{l.tags.map((t) => <li class="chip">{t}</li>)}</ul>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .osi { border-top: 1px solid var(--line-strong); }
+  .layer { border-bottom: 1px solid var(--line-strong); position: relative; transition: background 0.3s; }
+  .layer::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--signal);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s var(--ease);
+  }
+  .layer[open] { background: linear-gradient(90deg, var(--signal-soft), transparent 60%); }
+  .layer[open]::before { transform: scaleY(1); }
+
+  summary {
+    list-style: none;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 70px 150px 1fr 28px;
+    align-items: center;
+    gap: 16px;
+    padding: 26px 18px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .layer__id { font-size: 14px; color: var(--signal); }
+  .layer__name { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
+  .layer__title { font: 600 clamp(19px, 2.6vw, 32px)/1.1 var(--f-display); letter-spacing: -0.025em; transition: color 0.2s, transform 0.4s var(--ease); }
+  summary:hover .layer__title { color: var(--signal); transform: translateX(6px); }
+  .layer__plus { position: relative; width: 18px; height: 18px; justify-self: end; }
+  .layer__plus::before, .layer__plus::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1.5px; background: var(--muted); transition: transform 0.35s var(--ease); }
+  .layer__plus::after { transform: rotate(90deg); }
+  .layer[open] .layer__plus::after { transform: rotate(0); }
+
+  .layer__body { padding: 0 18px 30px calc(70px + 150px + 32px + 18px); display: grid; gap: 18px; animation: open 0.5s var(--ease); }
+  .layer__body p { margin: 0; max-width: 62ch; color: var(--muted); }
+  .layer__body ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  @keyframes open { from { opacity: 0; transform: translateY(-8px); } }
+
+  @media (max-width: 760px) {
+    summary { grid-template-columns: 44px 1fr 22px; padding: 22px 6px; gap: 10px; }
+    .layer__name { display: none; }
+    .layer__body { padding: 0 6px 26px 54px; }
+  }
+</style>

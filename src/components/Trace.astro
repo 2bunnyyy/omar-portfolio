@@ -1,0 +1,92 @@
+---
+import { hops } from '../data/profile';
+// Fake but plausible latencies, growing with each hop
+const ms = (i: number) => [(4 + i * 7.3).toFixed(1), (4.6 + i * 7.1).toFixed(1), (5.1 + i * 7.6).toFixed(1)];
+---
+
+<section class="trace" id="trace">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">03 // Parcours</span>
+      <h2 class="sec-title">traceroute <em>omar</em></h2>
+      <p class="sec-lead">Chaque étape de mon parcours est un saut vers la destination suivante.</p>
+    </div>
+
+    <div class="term frame reveal">
+      <div class="term__bar mono">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span>omar@djibouti: ~ — bash</span>
+      </div>
+      <div class="term__body mono">
+        <p class="cmd"><span class="p">$</span> traceroute -n omar --to futur</p>
+        <p class="muted">traceroute to futur (∞), {hops.length + 1} hops max, 60 byte packets</p>
+
+        <ol class="hops">
+          {hops.map((h, i) => (
+            <li class="hop" style={`--i:${i}`}>
+              <div class="hop__line">
+                <span class="hop__n">{String(i + 1).padStart(2, ' ')}</span>
+                <span class="hop__host">{h.host}</span>
+                <span class="hop__ms">{ms(i).map((m) => `${m} ms`).join('  ')}</span>
+              </div>
+              <div class="hop__card">
+                <div class="hop__top">
+                  <h3>{h.title}</h3>
+                  <span class="hop__period">{h.period}</span>
+                </div>
+                <p class="hop__org">{h.org}</p>
+                <ul>{h.points.map((p) => <li>{p}</li>)}</ul>
+              </div>
+            </li>
+          ))}
+          <li class="hop hop--next" style={`--i:${hops.length}`}>
+            <div class="hop__line">
+              <span class="hop__n">{String(hops.length + 1).padStart(2, ' ')}</span>
+              <span class="hop__host">* * *</span>
+              <span class="hop__ms next">prochaine destination : votre projet ?</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .term { border: 1px solid var(--line-strong); background: rgba(8, 13, 22, 0.88); }
+  .term__bar { display: flex; align-items: center; gap: 16px; padding: 12px 16px; font-size: 12px; color: var(--dim); border-bottom: 1px solid var(--line); }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--ink-3); border: 1px solid var(--line-strong); }
+  .dots i:first-child { background: var(--red); border-color: transparent; opacity: 0.8; }
+  .term__body { padding: clamp(18px, 3vw, 34px); font-size: 13.5px; }
+  .term__body p { margin: 0 0 4px; }
+  .cmd { color: var(--text); }
+  .p { color: var(--signal); }
+  .muted { color: var(--dim); }
+
+  .hops { list-style: none; margin: 22px 0 0; padding: 0; }
+  .hop { position: relative; padding-left: 0; opacity: 0; transform: translateX(-10px); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); transition-delay: calc(var(--i) * 0.22s); }
+  :global(.term.is-in) .hop { opacity: 1; transform: none; }
+  .hop__line { display: grid; grid-template-columns: 32px minmax(150px, 220px) 1fr; gap: 14px; padding: 6px 0; white-space: pre; }
+  .hop__n { color: var(--dim); }
+  .hop__host { color: var(--signal); }
+  .hop__ms { color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+  .next { color: var(--amber); white-space: normal; }
+
+  .hop__card { margin: 6px 0 22px 46px; padding: 18px 22px; border-left: 1px solid var(--line-strong); font-family: var(--f-sans); transition: border-color 0.3s, background 0.3s; }
+  .hop:hover .hop__card { border-color: var(--signal); background: var(--signal-soft); }
+  .hop__top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; }
+  .hop__card h3 { margin: 0; font: 600 clamp(17px, 2vw, 22px)/1.2 var(--f-display); letter-spacing: -0.02em; }
+  .hop__period { font: 400 12px/1 var(--f-mono); color: var(--amber); }
+  .hop__org { margin: 6px 0 12px !important; font-size: 14px; color: var(--muted); }
+  .hop__card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+  .hop__card li { position: relative; padding-left: 18px; font-size: 15px; color: #c3cfdd; }
+  .hop__card li::before { content: '›'; position: absolute; left: 0; color: var(--signal); font-family: var(--f-mono); }
+
+  @media (max-width: 640px) {
+    .hop__line { grid-template-columns: 24px 1fr; }
+    .hop__ms { display: none; }
+    .hop--next .hop__ms { display: block; grid-column: 2; }
+    .hop__card { margin-left: 12px; padding: 14px 14px; }
+  }
+</style>

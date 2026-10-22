@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="404 — Hôte injoignable">
+  <main class="nf wrap">
+    <p class="mono code">ping: cette-page: Name or service not known</p>
+    <h1>404</h1>
+    <p class="mono">Request timeout · 100% packet loss</p>
+    <a class="btn btn--solid" href="/">← Retour à l'accueil</a>
+  </main>
+</Base>
+
+<style>
+  .nf { min-height: 100svh; display: grid; place-content: center; justify-items: start; gap: 18px; }
+  .code { color: var(--red); margin: 0; }
+  h1 { margin: 0; font: 800 clamp(96px, 22vw, 240px)/0.85 var(--f-display); letter-spacing: -0.06em; color: var(--signal); }
+  p { margin: 0; color: var(--muted); }
+</style>

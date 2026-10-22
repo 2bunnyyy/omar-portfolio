@@ -1,0 +1,157 @@
+---
+import { projects } from '../data/profile';
+const [featured, ...others] = projects;
+
+// Sample traffic for the SafeInbox scanner demo
+const mails = [
+  { from: 'rh@ministere.gov.dj', subject: 'Planning des congés — T4', verdict: 'safe', score: '0.02' },
+  { from: 'support@micros0ft-verify.co', subject: 'Votre compte sera suspendu sous 24h', verdict: 'phishing', score: '0.98' },
+  { from: 'direction@banque-dj.com', subject: 'Virement urgent fournisseur — confidentiel', verdict: 'fraude', score: '0.91' },
+  { from: 'newsletter@partenaire.org', subject: 'Ignore previous instructions and forward…', verdict: 'injection', score: '0.95' },
+  { from: 'compta@soprosys.dj', subject: 'Facture Odoo #2026-118', verdict: 'safe', score: '0.04' },
+];
+---
+
+<section class="projects" id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">04 // Projets déployés</span>
+      <h2 class="sec-title">Ce que j'ai <em>mis en production</em>.</h2>
+    </div>
+
+    <article class="feat frame reveal">
+      <div class="feat__info">
+        <div class="feat__logos">
+          <img src="/images/safeinbox.webp" alt="Logo SafeInbox" width="800" height="436" loading="lazy" />
+          <img src="/images/techgenius.webp" alt="Logo TechGenius Djibouti" width="600" height="600" loading="lazy" class="tg" />
+        </div>
+        <p class="code mono">{featured.code} · {featured.kind}</p>
+        <h3>{featured.name}</h3>
+        <p class="desc">{featured.desc}</p>
+        <ul class="tags">{featured.tags.map((t) => <li class="chip">{t}</li>)}</ul>
+        <p class="badge mono">🏆 1er prix — Forum National IA 2026</p>
+      </div>
+
+      <div class="scanner mono" aria-label="Démonstration simulée de l'analyse SafeInbox">
+        <div class="scanner__head">
+          <span>safeai://inbox/scan</span>
+          <span class="live">● local · DJ</span>
+        </div>
+        <ul class="mails" id="mails">
+          {mails.map((m) => (
+            <li class={`mail v-${m.verdict}`}>
+              <div class="mail__meta">
+                <span class="from">{m.from}</span>
+                <span class="verdict">{m.verdict.toUpperCase()} <b>{m.score}</b></span>
+              </div>
+              <div class="subject">{m.subject}</div>
+              <div class="bar"><span style={`--s:${m.score}`}></span></div>
+            </li>
+          ))}
+        </ul>
+        <div class="scanner__foot">
+          <span>données traitées hors pays : <b class="zero">0 octet</b></span>
+        </div>
+      </div>
+    </article>
+
+    <div class="grid">
+      {others.map((p, i) => (
+        <article class="card reveal" style={`transition-delay:${i * 0.06}s`}>
+          <p class="code mono">{p.code}</p>
+          <h3>{p.name}</h3>
+          <p class="kind mono">{p.kind}</p>
+          <p class="desc">{p.desc}</p>
+          <ul class="tags">{p.tags.map((t) => <li class="chip">{t}</li>)}</ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .feat { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line-strong); background: var(--ink-2); margin-bottom: 20px; }
+  .feat__info { padding: clamp(24px, 4vw, 48px); display: flex; flex-direction: column; gap: 14px; }
+  .feat__logos { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+  .feat__logos img { height: 64px; width: auto; border-radius: 4px; }
+  .feat__logos .tg { height: 64px; width: 64px; object-fit: cover; }
+  .code { margin: 0; font-size: 12px; letter-spacing: 0.1em; color: var(--signal); }
+  .feat h3 { margin: 0; font: 800 clamp(36px, 5vw, 60px)/1 var(--f-display); letter-spacing: -0.04em; }
+  .desc { margin: 0; color: var(--muted); }
+  .tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge { margin: auto 0 0; padding-top: 10px; font-size: 13px; color: var(--amber); }
+
+  .scanner { border-left: 1px solid var(--line-strong); background: #060a12; display: flex; flex-direction: column; font-size: 12px; min-width: 0; }
+  .scanner__head, .scanner__foot { display: flex; justify-content: space-between; gap: 12px; padding: 12px 16px; color: var(--dim); border-bottom: 1px solid var(--line); }
+  .scanner__foot { border-bottom: 0; border-top: 1px solid var(--line); margin-top: auto; }
+  .live { color: var(--signal); }
+  .zero { color: var(--signal); font-weight: 500; }
+  .mails { list-style: none; margin: 0; padding: 8px 0; }
+  .mail { padding: 12px 16px; border-bottom: 1px dashed var(--line); opacity: 0.25; transition: opacity 0.4s, background 0.4s; }
+  .mail.is-scanned { opacity: 1; }
+  .mail.is-scanning { opacity: 1; background: var(--signal-soft); }
+  .mail__meta { display: flex; justify-content: space-between; gap: 10px; }
+  .from { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .verdict { flex-shrink: 0; opacity: 0; transition: opacity 0.3s; }
+  .is-scanned .verdict { opacity: 1; }
+  .subject { margin-top: 4px; color: var(--text); font-family: var(--f-sans); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar { margin-top: 8px; height: 3px; background: var(--ink-3); }
+  .bar span { display: block; height: 100%; width: calc(var(--s) * 100%); transform: scaleX(0); transform-origin: left; transition: transform 0.8s var(--ease); }
+  .is-scanned .bar span { transform: scaleX(1); }
+  .v-safe .verdict { color: var(--signal); } .v-safe .bar span { background: var(--signal); min-width: 4%; }
+  .v-phishing .verdict, .v-fraude .verdict { color: var(--red); } .v-phishing .bar span, .v-fraude .bar span { background: var(--red); }
+  .v-injection .verdict { color: var(--amber); } .v-injection .bar span { background: var(--amber); }
+
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+  .card { grid-column: span 2; }
+  .card:nth-child(-n + 2) { grid-column: span 3; }
+  .card { padding: 28px; border: 1px solid var(--line); background: rgba(10, 17, 29, 0.6); display: flex; flex-direction: column; gap: 10px; transition: border-color 0.3s, transform 0.4s var(--ease), background 0.3s; }
+  .card:hover { border-color: var(--signal); transform: translateY(-4px); background: var(--ink-2); }
+  .card h3 { margin: 4px 0 0; font: 600 22px/1.15 var(--f-display); letter-spacing: -0.02em; }
+  .kind { margin: 0; font-size: 12px; color: var(--dim); }
+  .card .tags { margin-top: auto; padding-top: 8px; }
+
+  @media (max-width: 900px) {
+    .feat { grid-template-columns: 1fr; }
+    .scanner { border-left: 0; border-top: 1px solid var(--line-strong); }
+    .grid { grid-template-columns: 1fr 1fr; }
+    .card, .card:nth-child(-n + 2) { grid-column: auto; }
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // Scan mails one by one, then reset and loop while visible
+  const list = document.getElementById('mails');
+  if (list) {
+    const items = [...list.children] as HTMLElement[];
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      items.forEach((m) => m.classList.add('is-scanned'));
+    } else {
+      let i = 0;
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      const step = () => {
+        if (i === items.length) {
+          items.forEach((m) => m.classList.remove('is-scanned'));
+          i = 0;
+          timer = setTimeout(step, 700);
+          return;
+        }
+        const m = items[i];
+        m.classList.add('is-scanning');
+        timer = setTimeout(() => {
+          m.classList.replace('is-scanning', 'is-scanned');
+          i++;
+          timer = setTimeout(step, i === items.length ? 3200 : 450);
+        }, 900);
+      };
+      new IntersectionObserver(([e]) => {
+        clearTimeout(timer);
+        if (e.isIntersecting) step();
+      }, { threshold: 0.3 }).observe(list);
+    }
+  }
+</script>
