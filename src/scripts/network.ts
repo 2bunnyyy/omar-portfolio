@@ -5,8 +5,6 @@ type Node = { x: number; y: number; vx: number; vy: number; r: number; label?: s
 type Packet = { a: Node; b: Node; t: number; speed: number; hot: boolean };
 
 const LABELS = ['ODOO', 'LLM', 'FW', 'SRV', 'SAFEAI', 'VPN', 'DNS', 'OCR', 'SQL', 'API'];
-const SIGNAL = '63, 242, 212';
-const AMBER = '255, 181, 71';
 const LINK = 130 * 130;
 
 export function startNetwork(canvas: HTMLCanvasElement) {
@@ -19,6 +17,18 @@ export function startNetwork(canvas: HTMLCanvasElement) {
   const packets: Packet[] = [];
   const pointer: Node = { x: -999, y: -999, vx: 0, vy: 0, r: 3 };
   let running = true;
+
+  // Colors come from the active theme's CSS variables
+  let SIGNAL = '', AMBER = '', NODE = '', LABEL = '';
+  function readColors() {
+    const css = getComputedStyle(document.documentElement);
+    const v = (name: string) => css.getPropertyValue(name).trim();
+    SIGNAL = v('--signal-rgb');
+    AMBER = v('--amber-rgb');
+    NODE = v('--node-rgb');
+    LABEL = v('--label-rgb');
+  }
+  readColors();
 
   function resize() {
     dpr = Math.min(devicePixelRatio || 1, 2);
@@ -79,10 +89,10 @@ export function startNetwork(canvas: HTMLCanvasElement) {
     // Nodes + labels
     ctx!.font = '10px "IBM Plex Mono", monospace';
     for (const n of nodes) {
-      ctx!.fillStyle = n.label ? `rgba(${SIGNAL}, 0.95)` : 'rgba(180, 205, 230, 0.55)';
+      ctx!.fillStyle = n.label ? `rgba(${SIGNAL}, 0.95)` : `rgba(${NODE}, 0.55)`;
       ctx!.beginPath(); ctx!.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx!.fill();
       if (n.label) {
-        ctx!.fillStyle = 'rgba(160, 185, 210, 0.55)';
+        ctx!.fillStyle = `rgba(${LABEL}, 0.6)`;
         ctx!.fillText(n.label, n.x + 7, n.y - 6);
       }
     }
@@ -107,6 +117,11 @@ export function startNetwork(canvas: HTMLCanvasElement) {
 
   resize();
   addEventListener('resize', resize);
+  addEventListener('themechange', () => {
+    readColors();
+    // Paused (off-screen or reduced motion): redraw a single frame
+    if (!running) { running = true; frame(); running = false; }
+  });
   canvas.parentElement?.addEventListener('pointermove', (e) => {
     const r = canvas.getBoundingClientRect();
     pointer.x = e.clientX - r.left;

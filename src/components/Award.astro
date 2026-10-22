@@ -57,7 +57,7 @@ const ticker = "FORUM NATIONAL SUR L'INTELLIGENCE ARTIFICIELLE ✦ 2–3 SEPTEMB
 
 <style>
   .award { padding-top: 0; }
-  .ticker { overflow: hidden; border-block: 1px solid var(--line); background: rgba(255, 181, 71, 0.05); margin-bottom: clamp(80px, 11vw, 140px); }
+  .ticker { overflow: hidden; border-block: 1px solid var(--line); background: var(--amber-soft); margin-bottom: clamp(80px, 11vw, 140px); }
   .ticker__track { display: flex; width: max-content; animation: tick 38s linear infinite; }
   .ticker span { padding: 16px 0; font-size: 13px; letter-spacing: 0.18em; color: var(--amber); white-space: pre; }
   @keyframes tick { to { transform: translateX(-50%); } }
@@ -66,7 +66,7 @@ const ticker = "FORUM NATIONAL SUR L'INTELLIGENCE ARTIFICIELLE ✦ 2–3 SEPTEMB
 
   .rank { display: grid; grid-template-columns: auto 1fr; align-items: end; gap: 0 16px; padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1px solid var(--line); }
   .rank__lbl { grid-column: 1 / -1; font-size: 11px; letter-spacing: 0.2em; color: var(--dim); }
-  .rank__num { font: 800 clamp(80px, 12vw, 150px)/0.85 var(--f-display); letter-spacing: -0.06em; color: var(--amber); text-shadow: 0 0 60px rgba(255, 181, 71, 0.35); }
+  .rank__num { font: 800 clamp(80px, 12vw, 150px)/0.85 var(--f-display); letter-spacing: -0.06em; color: var(--amber); text-shadow: 0 0 60px var(--amber-glow); }
   .rank__sub { font-size: 12px; color: var(--muted); padding-bottom: 10px; }
 
   .award__text { margin: 0 0 32px; font-size: 17px; color: var(--muted); }
@@ -85,7 +85,7 @@ const ticker = "FORUM NATIONAL SUR L'INTELLIGENCE ARTIFICIELLE ✦ 2–3 SEPTEMB
   .m:not(.m--wide) { aspect-ratio: 1 / 1; }
   .m img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease), filter 0.6s; filter: saturate(0.85); }
   .m:hover img { transform: scale(1.04); filter: saturate(1.05); }
-  .m figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 12px 10px; font-size: 10.5px; letter-spacing: 0.06em; color: var(--text); background: linear-gradient(transparent, rgba(5, 8, 15, 0.9)); }
+  .m figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 12px 10px; font-size: 10.5px; letter-spacing: 0.06em; color: #e3ebf5; background: linear-gradient(transparent, rgba(5, 8, 15, 0.9)); }
 
   @media (max-width: 900px) {
     .award__grid { grid-template-columns: 1fr; }

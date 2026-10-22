@@ -20,8 +20,13 @@ const links = [
         ))}
       </ul>
     </nav>
-    <div class="nav__clock mono" aria-label="Heure de Djibouti">
-      <span class="lbl">DJI</span> <time id="clock">--:--:--</time>
+    <div class="nav__right">
+      <div class="nav__clock mono" aria-label="Heure de Djibouti">
+        <span class="lbl">DJI</span> <time id="clock">--:--:--</time>
+      </div>
+      <button class="theme mono" id="theme-toggle" type="button" aria-label="Basculer le thème clair / sombre">
+        <span data-t="dark">Sombre</span><span data-t="light">Clair</span>
+      </button>
     </div>
   </div>
 </header>
@@ -36,7 +41,7 @@ const links = [
     border-bottom: 1px solid transparent;
     transition: background 0.3s, border-color 0.3s;
   }
-  .nav.is-scrolled { background: rgba(5, 8, 15, 0.78); backdrop-filter: blur(12px); border-color: var(--line); }
+  .nav.is-scrolled { background: var(--nav-bg); backdrop-filter: blur(12px); border-color: var(--line); }
   .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
   .nav__logo { font-size: 14px; display: flex; align-items: center; gap: 2px; white-space: nowrap; }
   .dot { width: 8px; height: 8px; margin-right: 10px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 12px var(--signal); animation: pulse 2.4s infinite; }
@@ -55,10 +60,28 @@ const links = [
   .code { color: var(--dim); transition: color 0.2s; }
   .nav__clock { font-size: 12px; color: var(--muted); white-space: nowrap; }
   .lbl { color: var(--amber); }
+  .nav__right { display: flex; align-items: center; gap: 18px; }
+  .theme {
+    display: flex;
+    padding: 3px;
+    border: 1px solid var(--line-strong);
+    background: var(--panel);
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .theme span { padding: 5px 9px; color: var(--dim); transition: background 0.25s, color 0.25s; }
+  :global(:root[data-theme='dark']) .theme [data-t='dark'],
+  :global(:root[data-theme='light']) .theme [data-t='light'] { background: var(--signal); color: var(--ink); }
+  :global(:root[data-theme='light']) .theme [data-t='light'] { color: #fff; }
   @keyframes pulse { 50% { opacity: 0.35; } }
 
   @media (max-width: 900px) {
     .nav__links { display: none; }
+  }
+  @media (max-width: 420px) {
+    .nav__clock { display: none; }
   }
 </style>
 
@@ -67,6 +90,16 @@ const links = [
   const onScroll = () => nav?.classList.toggle('is-scrolled', scrollY > 30);
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  const toggle = document.getElementById('theme-toggle');
+  toggle?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch {}
+    document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')!.content = next === 'light' ? '#f4f6f9' : '#05080f';
+    dispatchEvent(new Event('themechange'));
+  });
 
   const clock = document.getElementById('clock');
   const fmt = new Intl.DateTimeFormat('fr-FR', {

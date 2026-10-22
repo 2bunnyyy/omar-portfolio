@@ -23,6 +23,16 @@ const ogImage = new URL(url('/images/forum-laureats.webp'), Astro.site).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#05080f" />
+    <script is:inline>
+      // Apply the saved or system theme before first paint to avoid a flash
+      (() => {
+        let t;
+        try { t = localStorage.getItem('theme'); } catch {}
+        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.dataset.theme = t;
+        document.querySelector('meta[name="theme-color"]').content = t === 'light' ? '#f4f6f9' : '#05080f';
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
     <link rel="canonical" href={Astro.url.href} />
 

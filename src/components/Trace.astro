@@ -53,7 +53,7 @@ const ms = (i: number) => [(4 + i * 7.3).toFixed(1), (4.6 + i * 7.1).toFixed(1),
 </section>
 
 <style>
-  .term { border: 1px solid var(--line-strong); background: rgba(8, 13, 22, 0.88); }
+  .term { border: 1px solid var(--line-strong); background: var(--panel-strong); }
   .term__bar { display: flex; align-items: center; gap: 16px; padding: 12px 16px; font-size: 12px; color: var(--dim); border-bottom: 1px solid var(--line); }
   .dots { display: flex; gap: 6px; }
   .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--ink-3); border: 1px solid var(--line-strong); }
@@ -80,7 +80,7 @@ const ms = (i: number) => [(4 + i * 7.3).toFixed(1), (4.6 + i * 7.1).toFixed(1),
   .hop__period { font: 400 12px/1 var(--f-mono); color: var(--amber); }
   .hop__org { margin: 6px 0 12px !important; font-size: 14px; color: var(--muted); }
   .hop__card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
-  .hop__card li { position: relative; padding-left: 18px; font-size: 15px; color: #c3cfdd; }
+  .hop__card li { position: relative; padding-left: 18px; font-size: 15px; color: var(--text-soft); }
   .hop__card li::before { content: '›'; position: absolute; left: 0; color: var(--signal); font-family: var(--f-mono); }
 
   @media (max-width: 640px) {

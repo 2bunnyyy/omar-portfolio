@@ -12,6 +12,21 @@
   --blue: #4b9be8;
   --amber: #ffb547;
   --red: #ff5c6c;
+  --text-soft: #c3cfdd;
+  --panel: rgba(10, 17, 29, 0.6);
+  --panel-strong: rgba(8, 13, 22, 0.88);
+  --console: #060a12;
+  --nav-bg: rgba(5, 8, 15, 0.78);
+  --amber-soft: rgba(255, 181, 71, 0.05);
+  --amber-glow: rgba(255, 181, 71, 0.35);
+  --glow-1: rgba(75, 155, 232, 0.13);
+  --glow-2: rgba(63, 242, 212, 0.07);
+  --scanline: rgba(255, 255, 255, 0.018);
+  /* Raw RGB triplets for the canvas */
+  --signal-rgb: 63, 242, 212;
+  --amber-rgb: 255, 181, 71;
+  --node-rgb: 180, 205, 230;
+  --label-rgb: 160, 185, 210;
 
   --f-display: 'Unbounded', system-ui, sans-serif;
   --f-sans: 'IBM Plex Sans', system-ui, sans-serif;
@@ -21,6 +36,37 @@
   --max: 1240px;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --ink: #f4f6f9;
+  --ink-2: #ffffff;
+  --ink-3: #e6ebf2;
+  --line: rgba(20, 50, 90, 0.09);
+  --line-strong: rgba(20, 50, 90, 0.2);
+  --text: #0b1422;
+  --text-soft: #2c3b50;
+  --muted: #4a5b72;
+  --dim: #7d8ca1;
+  --signal: #08907c;
+  --signal-soft: rgba(8, 144, 124, 0.09);
+  --blue: #2c6290;
+  --amber: #b86e00;
+  --red: #d43848;
+  --panel: rgba(255, 255, 255, 0.72);
+  --panel-strong: rgba(255, 255, 255, 0.92);
+  --console: #f8fafc;
+  --nav-bg: rgba(244, 246, 249, 0.82);
+  --amber-soft: rgba(184, 110, 0, 0.06);
+  --amber-glow: rgba(184, 110, 0, 0.18);
+  --glow-1: rgba(44, 98, 144, 0.1);
+  --glow-2: rgba(8, 144, 124, 0.07);
+  --scanline: rgba(0, 0, 0, 0.012);
+  --signal-rgb: 8, 144, 124;
+  --amber-rgb: 184, 110, 0;
+  --node-rgb: 60, 90, 125;
+  --label-rgb: 70, 95, 125;
+  color-scheme: light;
 }
 
 *,
@@ -47,8 +93,8 @@ body::before {
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(ellipse 80% 60% at 70% 0%, rgba(75, 155, 232, 0.13), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(63, 242, 212, 0.07), transparent 60%),
+    radial-gradient(ellipse 80% 60% at 70% 0%, var(--glow-1), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 0% 100%, var(--glow-2), transparent 60%),
     linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 64px 64px,
     linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 64px 64px,
     var(--ink);
@@ -62,7 +108,7 @@ body::after {
   inset: 0;
   z-index: 100;
   pointer-events: none;
-  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px);
+  background: repeating-linear-gradient(0deg, var(--scanline) 0 1px, transparent 1px 3px);
 }
 
 ::selection { background: var(--signal); color: var(--ink); }
@@ -112,12 +158,14 @@ section { position: relative; padding: clamp(72px, 9vw, 120px) 0; }
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text);
-  background: rgba(10, 17, 29, 0.6);
+  background: var(--panel);
   backdrop-filter: blur(6px);
   transition: border-color 0.25s, color 0.25s, background 0.25s, transform 0.25s var(--ease);
 }
 .btn:hover { border-color: var(--signal); color: var(--signal); transform: translateY(-2px); }
 .btn--solid { background: var(--signal); border-color: var(--signal); color: var(--ink); }
+:root[data-theme='light'] .btn--solid { color: #fff; }
+:root[data-theme='light'] .btn--solid:hover { color: var(--signal); }
 .btn--solid:hover { background: transparent; }
 
 .chip {
